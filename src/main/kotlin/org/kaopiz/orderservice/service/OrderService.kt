@@ -2,7 +2,6 @@ package org.kaopiz.orderservice.service
 
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
-import kotlinx.serialization.Serializable
 import org.jboss.logging.Logger
 import org.kaopiz.orderservice.dto.CreateOrderDTO
 import org.kaopiz.orderservice.dto.OrderResponseDTO
@@ -13,9 +12,12 @@ import org.kaopiz.orderservice.repository.OrderRepository
 
 @ApplicationScoped
 class OrderService(private val orderRepository: OrderRepository) {
-
     private val log: Logger = Logger.getLogger(OrderService::class.java)
-    fun getAllOrders(page: Int, size: Int): PaginatedResponse<OrderResponseDTO> {
+
+    fun getAllOrders(
+        page: Int,
+        size: Int,
+    ): PaginatedResponse<OrderResponseDTO> {
         val startIndex = (page - 1) * size
         val orders = orderRepository.findAll().page(startIndex, size).list()
         val totalOrders = orderRepository.count()
@@ -34,7 +36,10 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
     @Transactional
-    fun updateOrder(id: Long, updatedOrder: UpdateOrderDTO): OrderResponseDTO? {
+    fun updateOrder(
+        id: Long,
+        updatedOrder: UpdateOrderDTO,
+    ): OrderResponseDTO? {
         val order = getOrderById(id)
         if (order != null) {
             order.customerName = updatedOrder.customerName ?: order.customerName
@@ -58,12 +63,11 @@ class OrderService(private val orderRepository: OrderRepository) {
         return isDeleted
     }
 
-
     fun toCreateOrderDTO(orderEntity: OrderEntity): CreateOrderDTO {
         return CreateOrderDTO(
-                customerName = orderEntity.customerName,
-                productName = orderEntity.productName,
-                quantity = orderEntity.quantity
+            customerName = orderEntity.customerName,
+            productName = orderEntity.productName,
+            quantity = orderEntity.quantity,
         )
     }
 
@@ -77,12 +81,10 @@ class OrderService(private val orderRepository: OrderRepository) {
 
     private fun toOrderResponseDTO(orderEntity: OrderEntity): OrderResponseDTO {
         return OrderResponseDTO(
-                id = orderEntity.id!!,
-                customerName = orderEntity.customerName,
-                productName = orderEntity.productName,
-                quantity = orderEntity.quantity
+            id = orderEntity.id!!,
+            customerName = orderEntity.customerName,
+            productName = orderEntity.productName,
+            quantity = orderEntity.quantity,
         )
     }
-
-
 }

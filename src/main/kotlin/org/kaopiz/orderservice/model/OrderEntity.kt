@@ -1,11 +1,10 @@
 package org.kaopiz.orderservice.model
 
-import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 /**
  * Example JPA entity defined as a Kotlin Panache Entity.
@@ -30,10 +29,11 @@ import kotlinx.serialization.json.Json
 @Entity
 @Serializable
 @Table(name = "Orders")
-class OrderEntity: PanacheEntity() {
-    companion object: PanacheCompanion<OrderEntity> {
+class OrderEntity : PanacheEntity() {
+    companion object : PanacheCompanion<OrderEntity> {
         fun byName(name: String) = list("name", name)
     }
+
     lateinit var customerName: String
     lateinit var productName: String
     var quantity: Int = 0

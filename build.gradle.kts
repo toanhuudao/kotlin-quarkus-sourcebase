@@ -15,7 +15,7 @@ val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
 
 dependencies {
-    implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+    implementation(enforcedPlatform("$quarkusPlatformGroupId:$quarkusPlatformArtifactId:$quarkusPlatformVersion"))
 //    implementation(enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}"))
 //    implementation("org.apache.camel.quarkus:camel-quarkus-kotlin")
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
@@ -32,11 +32,10 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured")
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    implementation ("io.quarkus:quarkus-smallrye-openapi")
-    implementation ("io.quarkus:quarkus-hibernate-validator")
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+    implementation("io.quarkus:quarkus-hibernate-validator")
     implementation("org.jboss.slf4j:slf4j-jboss-logging:1.2.0.Final")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-
 }
 
 group = "org.kaopiz"
