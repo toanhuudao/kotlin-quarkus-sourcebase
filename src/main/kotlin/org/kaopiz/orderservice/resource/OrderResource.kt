@@ -1,21 +1,16 @@
 package org.kaopiz.orderservice.resource
 
 import jakarta.ws.rs.*
+import jakarta.ws.rs.core.MediaType
+import jakarta.ws.rs.core.Response
+import jakarta.validation.Valid
+import org.kaopiz.orderservice.dto.CreateOrderDTO
+import org.kaopiz.orderservice.dto.OrderResponseDTO
+import org.kaopiz.orderservice.dto.PaginatedResponse
+import org.kaopiz.orderservice.dto.UpdateOrderDTO
 import org.kaopiz.orderservice.model.OrderEntity
 import org.kaopiz.orderservice.service.OrderService
-
-import java.net.URI;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import java.net.URI
 
 
 @Path("/orders")
@@ -24,20 +19,37 @@ import jakarta.ws.rs.core.Response;
 class OrderResource(private val orderService: OrderService) {
 
     @GET
-    fun getAllOrders() = orderService.getAllOrders()
+    fun getAllOrders(@QueryParam("page") @DefaultValue("1") page: Int, @QueryParam("size") @DefaultValue("10") size: Int): PaginatedResponse<OrderResponseDTO> {
+        return orderService.getAllOrders(page, size)
+    }
 
     @GET
     @Path("/{id}")
-    fun getOrderById(@PathParam("id") id: Long): OrderEntity? = orderService.getOrderById(id)
+    fun getOrderById(@PathParam("id") id: Long): Response {
+        val order = orderService.getOrderById(id) ?: throw NotFoundException("Order with ID $id not found")
+        return Response.ok(order).build()
+    }
 
     @POST
-    fun createOrder(order: OrderEntity): OrderEntity = orderService.createOrder(order)
+    fun createOrder(@Valid createOrderDTO: CreateOrderDTO): Response {
+        val createdOrder = orderService.createOrder(createOrderDTO)
+        return Response.created(URI.create("/orders/${createdOrder.id}")).entity(createdOrder).build()
+    }
 
     @PUT
     @Path("/{id}")
-    fun updateOrder(@PathParam("id") id: Long, order: OrderEntity): OrderEntity? = orderService.updateOrder(id, order)
+    fun updateOrder(@PathParam("id") id: Long, @Valid updatedOrderDTO: UpdateOrderDTO): Response {
+        val updatedOrder = orderService.updateOrder(id, updatedOrderDTO) ?: throw NotFoundException("Order with ID $id not found")
+        return Response.ok(updatedOrder).build()
+    }
 
     @DELETE
     @Path("/{id}")
-    fun deleteOrder(@PathParam("id") id: Long): Boolean = orderService.deleteOrder(id)
+    fun deleteOrder(@PathParam("id") id: Long): Response {
+        val isDeleted = orderService.deleteOrder(id)
+        if (!isDeleted) {
+            throw NotFoundException("Order with ID $id not found")
+        }
+        return Response.noContent().build()
+    }
 }
