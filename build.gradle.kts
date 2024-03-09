@@ -37,6 +37,16 @@ dependencies {
     implementation("org.jboss.slf4j:slf4j-jboss-logging:1.2.0.Final")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("io.quarkus:quarkus-smallrye-health")
+    // Flyway specific dependencies
+    implementation("io.quarkus:quarkus-flyway")
+// Flyway SQL Server specific dependencies
+    implementation("org.flywaydb:flyway-sqlserver")
+// Flyway MariaDB/MySQL specific dependencies
+    implementation("org.flywaydb:flyway-mysql")
+// Flyway Oracle specific dependencies
+    implementation("org.flywaydb:flyway-database-oracle")
+// JDBC driver dependencies
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
 }
 
 group = "org.kaopiz"

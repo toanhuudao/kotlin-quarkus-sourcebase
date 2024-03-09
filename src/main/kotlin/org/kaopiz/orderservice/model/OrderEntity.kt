@@ -2,6 +2,7 @@ package org.kaopiz.orderservice.model
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import kotlinx.serialization.Serializable
@@ -34,7 +35,12 @@ class OrderEntity : PanacheEntity() {
         fun byName(name: String) = list("name", name)
     }
 
+    @Column(name = "customer_name")
     lateinit var customerName: String
+
+    @Column(name = "product_name")
     lateinit var productName: String
+
+    @Column(name = "quantity")
     var quantity: Int = 0
 }
