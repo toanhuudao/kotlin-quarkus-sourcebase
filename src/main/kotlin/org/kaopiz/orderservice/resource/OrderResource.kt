@@ -33,7 +33,7 @@ class OrderResource(private val orderService: OrderService) {
         val order =
             orderService.getOrderById(
                 id,
-            ) ?: throw NotFoundException("Order with ID $id not found")
+            ) ?: throw NotFoundException("Order with ID $id not found.")
         return Response.ok(order).build()
     }
 
