@@ -1,5 +1,5 @@
 # Stage 1: Setup Gradle environment and enable caching
-FROM gradle:8.5-jdk21 as base
+FROM public.ecr.aws/docker/library/gradle:8.5-jdk21 as base
 ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
 WORKDIR /home/gradle/src
 COPY gradle.properties build.gradle.kts settings.gradle.kts /home/gradle/src/
