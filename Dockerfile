@@ -15,6 +15,7 @@ ENV LANGUAGE='en_US:en'
 
 WORKDIR /deployments
 
+
 # Copy the built application from the build stage
 COPY --from=base /home/gradle/src/build/quarkus-app/lib/ /deployments/lib/
 COPY --from=base /home/gradle/src/build/quarkus-app/*.jar /deployments/
