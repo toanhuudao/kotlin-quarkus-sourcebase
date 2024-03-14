@@ -9,5 +9,5 @@ import jakarta.ws.rs.core.MediaType
 class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "Hello from RESTEasy Reactive v.2"
+    fun hello() = "Hello from RESTEasy Reactive"
 }
