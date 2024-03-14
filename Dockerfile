@@ -6,7 +6,7 @@ COPY gradle.properties build.gradle.kts settings.gradle.kts /home/gradle/src/
 COPY src /home/gradle/src/src
 
 # Utilize build cache for faster subsequent builds
-RUN gradle build --no-daemon --parallel --build-cache
+RUN gradle build --no-daemon
 
 # Stage 2: Create the final runtime image
 FROM registry.access.redhat.com/ubi8/openjdk-21:1.18
