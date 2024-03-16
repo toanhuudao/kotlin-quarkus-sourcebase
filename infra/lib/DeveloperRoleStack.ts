@@ -19,7 +19,7 @@ export class DeveloperRoleStack extends cdk.Stack {
                 "codecommit:BatchGetRepositories",
                 "codecommit:Get*",
                 "codecommit:List*",
-                "codecommit:GitPull"
+                "codecommit:GitPull",
             ],
             resources: [`arn:aws:codecommit:${this.region}:${this.account}:ecommerce`],
             effect: Effect.ALLOW
@@ -40,6 +40,7 @@ export class DeveloperRoleStack extends cdk.Stack {
                 "codecommit:CreatePullRequest",
                 "codecommit:UpdatePullRequestStatus",
                 "codecommit:MergePullRequestByFastForward",
+                "codecommit:GitPush",
             ],
             resources: [`arn:aws:codecommit:${this.region}:${this.account}:ecommerce`],
             effect: Effect.ALLOW
@@ -51,22 +52,16 @@ export class DeveloperRoleStack extends cdk.Stack {
                 "codecommit:GitPush"
             ],
             resources: [
-                `arn:aws:codecommit:${this.region}:${this.account}:ecommerce/refs/heads/develop`,
-                `arn:aws:codecommit:${this.region}:${this.account}:ecommerce/refs/heads/master`
+                `arn:aws:codecommit:${this.region}:${this.account}:ecommerce`,
             ],
-            effect: Effect.DENY
+            effect: Effect.DENY,
+            conditions: {
+                'StringLike': {
+                    'codecommit:References': ['refs/heads/develop', 'refs/heads/master', 'refs/heads/feat-tset'],
+                },
+            },
         });
 
-        // Define a policy statement to allow pushing to other branches
-        const allowPushPolicyStatement = new iam.PolicyStatement({
-            actions: [
-                "codecommit:GitPush"
-            ],
-            resources: [
-                `arn:aws:codecommit:${this.region}:${this.account}:ecommerce`
-            ],
-            effect: Effect.ALLOW
-        });
 
         // Define a policy statement for read-only access to CloudWatch Logs and Metrics, and listing IAM users
         const readOnlyPolicyStatement = new iam.PolicyStatement({
@@ -92,7 +87,6 @@ export class DeveloperRoleStack extends cdk.Stack {
                 listRepositoriesPolicyStatement,
                 mergeRequestPolicyStatement,
                 denyPushPolicyStatement,
-                allowPushPolicyStatement,
                 readOnlyPolicyStatement
             ],
         });
