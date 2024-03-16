@@ -39,7 +39,8 @@ export class DeveloperRoleStack extends cdk.Stack {
             actions: [
                 "codecommit:CreatePullRequest",
                 "codecommit:UpdatePullRequestStatus",
-                "codecommit:MergePullRequestByFastForward"
+                "codecommit:MergePullRequestByFastForward",
+                "codecommit:GitPush",
             ],
             resources: [`arn:aws:codecommit:${this.region}:${this.account}:ecommerce`],
             effect: Effect.ALLOW
