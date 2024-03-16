@@ -40,7 +40,6 @@ export class DeveloperRoleStack extends cdk.Stack {
                 "codecommit:CreatePullRequest",
                 "codecommit:UpdatePullRequestStatus",
                 "codecommit:MergePullRequestByFastForward",
-                "codecommit:GitPush",
             ],
             resources: [`arn:aws:codecommit:${this.region}:${this.account}:ecommerce`],
             effect: Effect.ALLOW
@@ -58,6 +57,16 @@ export class DeveloperRoleStack extends cdk.Stack {
             effect: Effect.DENY
         });
 
+        // Define a policy statement to allow pushing to other branches
+        const allowPushPolicyStatement = new iam.PolicyStatement({
+            actions: [
+                "codecommit:GitPush"
+            ],
+            resources: [
+                `arn:aws:codecommit:${this.region}:${this.account}:ecommerce`
+            ],
+            effect: Effect.ALLOW
+        });
 
         // Define a policy statement for read-only access to CloudWatch Logs and Metrics, and listing IAM users
         const readOnlyPolicyStatement = new iam.PolicyStatement({
@@ -75,7 +84,6 @@ export class DeveloperRoleStack extends cdk.Stack {
             effect: Effect.ALLOW
         });
 
-
         // Create a policy and attach it to the group
         const policy = new iam.Policy(this, 'DeveloperPolicy', {
             policyName: 'developer-policy',
@@ -84,6 +92,7 @@ export class DeveloperRoleStack extends cdk.Stack {
                 listRepositoriesPolicyStatement,
                 mergeRequestPolicyStatement,
                 denyPushPolicyStatement,
+                allowPushPolicyStatement,
                 readOnlyPolicyStatement
             ],
         });
