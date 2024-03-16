@@ -57,7 +57,11 @@ export class DeveloperRoleStack extends cdk.Stack {
             effect: Effect.DENY,
             conditions: {
                 'StringLike': {
-                    'codecommit:References': ['refs/heads/develop', 'refs/heads/master', 'refs/heads/feat-tset'],
+                    'codecommit:References': [
+                        'refs/heads/develop',
+                        'refs/heads/master',
+                        'refs/heads/feat-tset',
+                    ],
                 },
             },
         });
