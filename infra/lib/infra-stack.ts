@@ -7,6 +7,7 @@ import {DeveloperGroupStack} from "./developer-group.stack";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import {CodeCommitStack} from "./codecommit.stack";
 import {CodeBuildStack} from "./codebuild.stack";
+import {EcrStack} from "./ecr.stack";
 
 export class InfraStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -37,5 +38,7 @@ export class InfraStack extends cdk.Stack {
             projectName: 'DevBEEcommerceCodeBuildProject',
             repository: codeCommitStack.repository,
         })
+
+        const erc = new EcrStack(this, 'DevEcommerceErcStack', {repositoryName:'e-commerce'})
     }
 }
