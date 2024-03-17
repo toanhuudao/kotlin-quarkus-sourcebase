@@ -8,6 +8,7 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 import {CodeCommitStack} from "./codecommit.stack";
 import {CodeBuildStack} from "./codebuild.stack";
 import {EcrStack} from "./ecr.stack";
+import {EcsTaskDefinitionStack} from "./ecs-task-definition.stack";
 
 export class InfraStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -39,6 +40,27 @@ export class InfraStack extends cdk.Stack {
             repository: codeCommitStack.repository,
         })
 
-        const erc = new EcrStack(this, 'DevEcommerceErcStack', {repositoryName:'e-commerce'})
+        const erc = new EcrStack(this, 'DevEcommerceErcStack', {repositoryName: 'e-commerce'})
+
+        const t1 = new EcsTaskDefinitionStack(this, 'taskDefinition1', {
+            vpc: vpcStack.vpc,
+            taskDefinitionConfig: {
+                cpu: 256,
+                containerImage: erc.repository,
+                memoryLimitMiB: 512,
+                name: 'test-td-1'
+            }
+        })
+
+        // const t2 = new EcsTaskDefinitionStack(this, 'taskDefinition2', {
+        //     vpc: vpcStack.vpc,
+        //     taskDefinitionConfig: {
+        //         cpu: 256,
+        //         containerImage: erc.repository,
+        //         memoryLimitMiB: 512,
+        //         name: 'test-td-2'
+        //     }
+        // })
+
     }
 }
