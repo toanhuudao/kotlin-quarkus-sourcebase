@@ -1,21 +1,41 @@
 import * as cdk from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import {VpcStack} from './vpc-stack';
-import {RdsStack} from "./rds-stack";
+import {RdsStack} from './rds-stack';
+import {DeveloperUserStack} from "./developer-user.stack";
+import {DeveloperGroupStack} from "./developer-group.stack";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-import {DeveloperRoleStack} from "./DeveloperRoleStack";
+import {CodeCommitStack} from "./codecommit.stack";
+import {CodeBuildStack} from "./codebuild.stack";
 
 export class InfraStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const vpcStack = new VpcStack(this, 'VpcQuarkusAppDev');
-        new RdsStack(this, 'RdsStack', {
-            dbAllocatedStorage: 20,
-            dbInstanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
-            dbName: "testdb",
-            vpc: vpcStack.vpc});
+        const vpcStack = new VpcStack(this, 'VpcStack');
 
-        new DeveloperRoleStack(scope, 'DeveloperRoleStack');
+        new RdsStack(this, 'RdsStack', {
+            vpc: vpcStack.vpc,
+            dbName: 'ecommerce',
+            dbInstanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.MICRO),
+            dbAllocatedStorage: 20
+        });
+
+        const codeCommitStack = new CodeCommitStack(this, 'CodeCommitStack');
+
+        const developerGroupStack = new DeveloperGroupStack(this, 'DeveloperGroupStack', {repository: codeCommitStack.repository});
+
+        new DeveloperUserStack(this, 'DeveloperUserStackTommy', {
+            userName: 'tommy',
+            password: '123456aA@',
+            developerGroup: developerGroupStack.developerGroup
+        });
+
+        const devBEStack = new CodeBuildStack(this, 'DevBECodeBuildStack', {
+            branchName: 'develop',
+            buildSpecFile: 'buildspec_dev.yml',
+            projectName: 'DevBEEcommerceCodeBuildProject',
+            repository: codeCommitStack.repository,
+        })
     }
 }

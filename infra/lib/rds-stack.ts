@@ -37,9 +37,9 @@ export class RdsStack extends cdk.Stack {
             allocatedStorage: props.dbAllocatedStorage,
             backupRetention: cdk.Duration.days(7),
             deletionProtection: false,
-            databaseName: 'testdb2',
+            databaseName: props.dbName,
             credentials: rds.Credentials.fromPassword('postgres', new cdk.SecretValue('postgres')),
-            instanceIdentifier: 'ecommerce-free'
+            instanceIdentifier: 'dev-ecommerce-db'
         });
     }
 }
