@@ -19,9 +19,10 @@ export class VpcStack extends cdk.Stack {
                 {
                     cidrMask: 24,
                     name: 'PrivateSubnet',
-                    subnetType: ec2.SubnetType.PUBLIC,
+                    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
                 },
             ],
         });
     }
 }
+ // InfraStackRdsStack108B535C, InfraStacktaskDefinition11594B244 and InfraStacktaskDefinitio

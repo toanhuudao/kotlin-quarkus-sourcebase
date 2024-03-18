@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
+import {Construct} from 'constructs';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
@@ -43,8 +43,8 @@ export class EcsTaskDefinitionStack extends cdk.Stack {
 
         taskDefinition.addContainer(props.taskDefinitionConfig.name, {
             image: ecs.ContainerImage.fromEcrRepository(props.taskDefinitionConfig.containerImage),
-            logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'task-definition' }),
-            portMappings: [{ containerPort: 8080, protocol: ecs.Protocol.TCP }],
+            logging: ecs.LogDrivers.awsLogs({streamPrefix: 'task-definition'}),
+            portMappings: [{containerPort: 8080, protocol: ecs.Protocol.TCP}],
         });
 
         const securityGroup = new ec2.SecurityGroup(this, 'EcsServiceSecurityGroup', {
