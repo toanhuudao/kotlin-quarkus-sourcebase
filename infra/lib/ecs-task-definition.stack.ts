@@ -49,6 +49,15 @@ export class EcsTaskDefinitionStack extends cdk.Stack {
             ],
         });
 
+        // Create a security group for the ECS service
+        const securityGroup = new ec2.SecurityGroup(this, 'EcsServiceSecurityGroup', {
+            vpc: props.vpc,
+            allowAllOutbound: true,
+            description: 'Security group for the ECS service',
+        });
+
+        securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8080), 'Allow HTTP traffic');
+
         const service = new ecs.FargateService(this, 'EcsService', {
             cluster: cluster,
             taskDefinition: taskDefinition,
@@ -57,6 +66,7 @@ export class EcsTaskDefinitionStack extends cdk.Stack {
             vpcSubnets: {
                 subnetType: ec2.SubnetType.PUBLIC,
             },
+            securityGroups: [securityGroup],
         });
 
         this.taskDefinition = taskDefinition;
