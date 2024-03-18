@@ -11,9 +11,19 @@ export class AlbStack extends cdk.Stack {
     public readonly loadBalancer: elbv2.ApplicationLoadBalancer;
     public readonly listener: elbv2.ApplicationListener;
     public readonly targetGroup: elbv2.ApplicationTargetGroup;
+    public readonly securityGroup: ec2.SecurityGroup;
 
     constructor(scope: Construct, id: string, props: AlbStackProps) {
         super(scope, id, props);
+
+        this.securityGroup = new ec2.SecurityGroup(this, 'ALBSecurityGroup', {
+            vpc: props.vpc,
+            description: 'Security group for the Application Load Balancer',
+            allowAllOutbound: true,
+            securityGroupName: 'ALBEcommerceSecurityGroup'
+        });
+
+        this.securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), 'Allow HTTP traffic');
 
         this.loadBalancer = new elbv2.ApplicationLoadBalancer(this, 'ALB', {
             vpc: props.vpc,
@@ -22,7 +32,8 @@ export class AlbStack extends cdk.Stack {
                 subnetType: ec2.SubnetType.PUBLIC,
                 onePerAz: true,
             },
-            loadBalancerName: 'DevEcommerceALB'
+            loadBalancerName: 'DevEcommerceALB',
+            securityGroup: this.securityGroup
         });
 
         this.listener = this.loadBalancer.addListener('Listener', {

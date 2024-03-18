@@ -25,4 +25,4 @@ export class VpcStack extends cdk.Stack {
         });
     }
 }
- // InfraStackRdsStack108B535C, InfraStacktaskDefinition11594B244 and InfraStacktaskDefinitio
+
