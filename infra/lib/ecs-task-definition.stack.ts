@@ -57,6 +57,7 @@ export class EcsTaskDefinitionStack extends cdk.Stack {
         const role = new iam.Role(this, 'TaskExecutionRole', {
             assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
             description: 'Role provides the ECS tasks with permissions to run',
+            roleName: "DevEcommerceTaskExecutionRole"
         });
 
         role.addToPolicy(new iam.PolicyStatement({
