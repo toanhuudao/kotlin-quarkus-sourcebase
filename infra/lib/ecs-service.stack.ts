@@ -2,12 +2,13 @@ import * as cdk from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import {TaskDefinitionRevision} from "aws-cdk-lib/aws-ecs";
 
 interface EcsServiceStackProps extends cdk.StackProps {
     vpc: ec2.Vpc;
     cluster: ecs.Cluster;
     taskDefinition: ecs.FargateTaskDefinition;
-    serviceName: string
+    serviceName: string;
 }
 
 export class EcsServiceStack extends cdk.Stack {
@@ -27,11 +28,15 @@ export class EcsServiceStack extends cdk.Stack {
         this.service = new ecs.FargateService(this, 'EcsService', {
             cluster: props.cluster,
             taskDefinition: props.taskDefinition,
-            desiredCount: 1,
+            desiredCount: 3,
             assignPublicIp: true,
             vpcSubnets: {subnetType: ec2.SubnetType.PUBLIC},
             securityGroups: [securityGroup],
+            taskDefinitionRevision: TaskDefinitionRevision.LATEST,
             serviceName: props.serviceName,
         });
+
+        // Add a dependency on the task definition stack to ensure it's updated first
+        this.service.node.addDependency(props.taskDefinition);
     }
 }

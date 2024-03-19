@@ -61,7 +61,7 @@ export class InfraStack extends cdk.Stack {
                 memoryLimitMiB: 512,
                 containerImage: erc.repository,
                 name: 'ecommerce-container',
-                family: 'dev-be-ecommerce-td'
+                family: 'dev-be-ecommerce-td',
             }
         })
 
