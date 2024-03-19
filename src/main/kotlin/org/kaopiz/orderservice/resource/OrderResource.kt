@@ -18,6 +18,7 @@ import java.net.URI
 @Consumes(MediaType.APPLICATION_JSON)
 class OrderResource(private val orderService: OrderService) {
     @GET
+    @Consumes(MediaType.APPLICATION_JSON)
     fun getAllOrders(
         @QueryParam("page") @DefaultValue("1") page: Int,
         @QueryParam("size") @DefaultValue("10") size: Int,

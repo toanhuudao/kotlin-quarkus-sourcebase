@@ -1,9 +1,7 @@
 package org.kaopiz.orderservice.dto
 
 import jakarta.validation.constraints.Positive
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class UpdateOrderDTO(
     val customerName: String? = null,
     val productName: String? = null,

@@ -2,9 +2,7 @@ package org.kaopiz.orderservice.dto
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class CreateOrderDTO(
     @field:NotBlank(message = "Customer name is required")
     val customerName: String,

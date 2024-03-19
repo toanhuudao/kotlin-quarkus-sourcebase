@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm") version "1.9.22"
     kotlin("plugin.allopen") version "1.9.22"
     id("io.quarkus")
-    kotlin("plugin.serialization") version "1.6.21"
 }
 
 repositories {
@@ -16,37 +15,24 @@ val quarkusPlatformVersion: String by project
 
 dependencies {
     implementation(enforcedPlatform("$quarkusPlatformGroupId:$quarkusPlatformArtifactId:$quarkusPlatformVersion"))
-//    implementation(enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}"))
-//    implementation("org.apache.camel.quarkus:camel-quarkus-kotlin")
     implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
-    implementation("io.quarkus:quarkus-rest-client-reactive-kotlin-serialization")
-//    implementation("org.apache.camel.quarkus:camel-quarkus-kotlin-dsl")
     implementation("io.quarkus:quarkus-kotlin")
-//    implementation("io.quarkus:quarkus-mongodb-panache-kotlin")
-    implementation("io.quarkus:quarkus-resteasy-reactive-kotlin-serialization")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-hibernate-orm")
-    implementation("io.quarkus:quarkus-resteasy-reactive")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
-    implementation("io.quarkus:quarkus-jdbc-postgresql")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation("io.quarkus:quarkus-smallrye-openapi")
     implementation("io.quarkus:quarkus-hibernate-validator")
     implementation("org.jboss.slf4j:slf4j-jboss-logging:1.2.0.Final")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("io.quarkus:quarkus-smallrye-health")
-    // Flyway specific dependencies
     implementation("io.quarkus:quarkus-flyway")
-// Flyway SQL Server specific dependencies
     implementation("org.flywaydb:flyway-sqlserver")
-// Flyway MariaDB/MySQL specific dependencies
     implementation("org.flywaydb:flyway-mysql")
-// Flyway Oracle specific dependencies
     implementation("org.flywaydb:flyway-database-oracle")
-// JDBC driver dependencies
     implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("io.quarkus:quarkus-hibernate-orm-rest-data-panache")
+    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
 }
 
 group = "org.kaopiz"
