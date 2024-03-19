@@ -2,6 +2,7 @@
 
 package org.kaopiz.orderservice.resource
 
+import jakarta.annotation.security.RolesAllowed
 import jakarta.validation.Valid
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
@@ -18,6 +19,7 @@ import java.net.URI
 @Consumes(MediaType.APPLICATION_JSON)
 class OrderResource(private val orderService: OrderService) {
     @GET
+    @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     fun getAllOrders(
         @QueryParam("page") @DefaultValue("1") page: Int,
