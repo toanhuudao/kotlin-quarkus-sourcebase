@@ -1,4 +1,4 @@
-package org.kaopiz.orderservice.model
+package org.kaopiz.order.model
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheCompanion
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity

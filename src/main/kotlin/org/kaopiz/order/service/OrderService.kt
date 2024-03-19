@@ -1,14 +1,14 @@
-package org.kaopiz.orderservice.service
+package org.kaopiz.order.service
 
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
 import org.jboss.logging.Logger
-import org.kaopiz.orderservice.dto.CreateOrderDTO
-import org.kaopiz.orderservice.dto.OrderResponseDTO
-import org.kaopiz.orderservice.dto.PaginatedResponse
-import org.kaopiz.orderservice.dto.UpdateOrderDTO
-import org.kaopiz.orderservice.model.OrderEntity
-import org.kaopiz.orderservice.repository.OrderRepository
+import org.kaopiz.order.dto.CreateOrderDTO
+import org.kaopiz.order.dto.OrderResponseDTO
+import org.kaopiz.order.dto.PaginatedResponse
+import org.kaopiz.order.dto.UpdateOrderDTO
+import org.kaopiz.order.model.OrderEntity
+import org.kaopiz.order.repository.OrderRepository
 
 @ApplicationScoped
 class OrderService(private val orderRepository: OrderRepository) {
@@ -80,7 +80,7 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
     private fun toOrderResponseDTO(orderEntity: OrderEntity): OrderResponseDTO {
-        var x =
+        val x =
             OrderResponseDTO(
                 id = orderEntity.id!!,
                 customerName = orderEntity.customerName,

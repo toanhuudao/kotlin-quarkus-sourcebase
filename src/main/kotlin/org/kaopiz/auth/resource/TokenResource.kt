@@ -23,7 +23,7 @@ class TokenResource {
                 "paymentScreen" to listOf("list"),
             )
 
-        val token = jwtService.generateToken("user1", permissionsByScreen)
+        val token = jwtService.generateToken(username, permissionsByScreen)
         println("JWT Token: $token")
 
         return token

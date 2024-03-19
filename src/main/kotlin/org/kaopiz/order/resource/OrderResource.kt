@@ -1,17 +1,16 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-package org.kaopiz.orderservice.resource
+package org.kaopiz.order.resource
 
 import jakarta.annotation.security.RolesAllowed
 import jakarta.validation.Valid
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
-import org.kaopiz.orderservice.dto.CreateOrderDTO
-import org.kaopiz.orderservice.dto.OrderResponseDTO
-import org.kaopiz.orderservice.dto.PaginatedResponse
-import org.kaopiz.orderservice.dto.UpdateOrderDTO
-import org.kaopiz.orderservice.service.OrderService
+import org.kaopiz.order.dto.CreateOrderDTO
+import org.kaopiz.order.dto.OrderResponseDTO
+import org.kaopiz.order.dto.UpdateOrderDTO
+import org.kaopiz.order.service.OrderService
 import java.net.URI
 
 @Path("/orders")
@@ -24,7 +23,7 @@ class OrderResource(private val orderService: OrderService) {
     fun getAllOrders(
         @QueryParam("page") @DefaultValue("1") page: Int,
         @QueryParam("size") @DefaultValue("10") size: Int,
-    ): PaginatedResponse<OrderResponseDTO> {
+    ): org.kaopiz.order.dto.PaginatedResponse<OrderResponseDTO> {
         return orderService.getAllOrders(page, size)
     }
 

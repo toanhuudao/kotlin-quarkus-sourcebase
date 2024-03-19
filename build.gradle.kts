@@ -35,6 +35,7 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     implementation("io.quarkus:quarkus-smallrye-jwt")
     implementation("io.quarkus:quarkus-smallrye-jwt-build")
+    implementation("org.mindrot:jbcrypt:0.4")
 }
 
 group = "org.kaopiz"

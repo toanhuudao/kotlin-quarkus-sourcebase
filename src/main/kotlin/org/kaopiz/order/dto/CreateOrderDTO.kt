@@ -1,4 +1,4 @@
-package org.kaopiz.orderservice.dto
+package org.kaopiz.order.dto
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive

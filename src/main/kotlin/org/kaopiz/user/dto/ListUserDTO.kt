@@ -1,6 +1,6 @@
-package org.kaopiz.orderservice.dto
+package org.kaopiz.user.dto
 
-data class ListOrderDTO(
+class ListUserDTO(
     val orders: List<OrderSummaryDTO>,
 )
 

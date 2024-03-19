@@ -1,4 +1,4 @@
-package org.kaopiz.orderservice.dto
+package org.kaopiz.order.dto
 
 data class OrderResponseDTO(
     val id: Long,
