@@ -75,7 +75,7 @@ export class InfraStack extends cdk.Stack {
 
 
         // alb and target group creation
-        const albStack = new AlbStack(this, 'devEcommerceAlb', {vpc: vpcStack.vpc})
+        const albStack = new AlbStack(this, 'DevEcommerceAlb', {vpc: vpcStack.vpc})
 
 
         // mapping ecs service with target group alb

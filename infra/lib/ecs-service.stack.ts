@@ -28,7 +28,7 @@ export class EcsServiceStack extends cdk.Stack {
         this.service = new ecs.FargateService(this, 'EcsService', {
             cluster: props.cluster,
             taskDefinition: props.taskDefinition,
-            desiredCount: 3,
+            desiredCount: 1,
             assignPublicIp: true,
             vpcSubnets: {subnetType: ec2.SubnetType.PUBLIC},
             securityGroups: [securityGroup],
