@@ -9,7 +9,6 @@ charset = utf-8
 
 # Use Unix-style line endings
 end_of_line = lf
-
 # Ensure files end with a newline
 insert_final_newline = true
 
@@ -23,11 +22,9 @@ trim_trailing_whitespace = true
 
 # Insert a space after keywords like if, for, while, etc.
 # (optional, you can adjust this to match your preferred style)
-space_after_keywords = true
 
 # Insert a space before opening parentheses in control flow constructs
 # (optional, you can adjust this to match your preferred style)
-space_before_parentheses = true
 
 # Use 4 spaces for an indent
 # (optional, you can adjust this to match your preferred style)
@@ -36,3 +33,4 @@ indent_size = 4
 # Use spaces for indentation
 # (optional, you can adjust this to match your preferred style)
 indent_style = space
+

@@ -38,6 +38,8 @@ class UserService(private val userRepository: UserRepository) {
         plainPassword: String,
         hashedPassword: String,
     ): Boolean {
-        return BCrypt.checkpw(plainPassword, hashedPassword)
+        val isPasswordCorrect = BCrypt.checkpw(plainPassword, hashedPassword)
+        log.debug("Password check result: $isPasswordCorrect")
+        return isPasswordCorrect
     }
 }
