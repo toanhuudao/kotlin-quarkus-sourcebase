@@ -1,5 +1,6 @@
 package org.kaopiz.user.resource
 
+import jakarta.validation.Valid
 import jakarta.ws.rs.Consumes
 import jakarta.ws.rs.POST
 import jakarta.ws.rs.Path
@@ -14,7 +15,9 @@ import org.kaopiz.user.service.UserService
 @Consumes(MediaType.APPLICATION_JSON)
 class UserResource(private val userService: UserService) {
     @POST
-    fun createUser(createUserDTO: CreateUserDTO): Response {
+    fun createUser(
+        @Valid createUserDTO: CreateUserDTO,
+    ): Response {
         val newUser = userService.createUser(createUserDTO)
         return Response.status(Response.Status.CREATED).entity(newUser).build()
     }

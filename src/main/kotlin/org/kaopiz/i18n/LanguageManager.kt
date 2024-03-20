@@ -37,4 +37,10 @@ object LanguageManager {
         val properties = loadProperties(language)
         return properties.getProperty(key, key)
     }
+
+    fun hasMessage(key: String): Boolean {
+        val language = currentLanguage.get()
+        val properties = loadProperties(language)
+        return properties.containsKey(key)
+    }
 }
