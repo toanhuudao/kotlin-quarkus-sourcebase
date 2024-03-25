@@ -8,6 +8,7 @@ import org.kaopiz.user.dto.DetailUserDTO
 import org.kaopiz.user.model.UserEntity
 import org.kaopiz.user.repository.UserRepository
 import org.mindrot.jbcrypt.BCrypt
+import java.sql.SQLException
 
 @ApplicationScoped
 class UserService(private val userRepository: UserRepository) {
@@ -15,19 +16,24 @@ class UserService(private val userRepository: UserRepository) {
 
     @Transactional
     fun createUser(createUserDto: CreateUserDTO): DetailUserDTO {
-        val newUser =
-            UserEntity().apply {
-                this.username = createUserDto.username
-                this.email = createUserDto.email
-                this.password = hashPassword(createUserDto.password)
-            }
-        userRepository.persist(newUser)
+        try {
+            val newUser =
+                UserEntity().apply {
+                    this.username = createUserDto.username
+                    this.email = createUserDto.email
+                    this.password = hashPassword(createUserDto.password)
+                }
+            userRepository.persist(newUser)
 
-        return DetailUserDTO(
-            id = newUser.id!!,
-            email = newUser.email!!,
-            username = newUser.username!!,
-        )
+            return DetailUserDTO(
+                id = newUser.id!!,
+                email = newUser.email!!,
+                username = newUser.username!!,
+            )
+        } catch (e: SQLException) {
+            log.error("Error occurred while persisting user: ${e.message}")
+            throw Exception("Error occurred while persisting user", e)
+        }
     }
 
     fun hashPassword(password: String): String {
